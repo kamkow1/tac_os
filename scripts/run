@@ -1,0 +1,2 @@
+#!/bin/sh
+qemu-system-x86_64 -drive format=raw,file="$TACOS_ROOT"target/x86_64-tacos_kernel/debug/bootimage-kernel.bin
