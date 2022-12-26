@@ -32,10 +32,10 @@ pub enum Color {
 #[allow(dead_code)]
 #[derive(Clone, Copy, PartialEq, Eq)]
 #[repr(transparent)]
-struct ColorCode(u8);
+pub struct ColorCode(u8);
 
 impl ColorCode {
-    fn new(fg: Color, bg: Color) -> ColorCode {
+    pub fn new(fg: Color, bg: Color) -> ColorCode {
         ColorCode((bg as u8) << 4 | (fg as u8))
     }
 }
@@ -122,6 +122,10 @@ impl Writer {
                 _ => self.write_byte(ASCII_PRINTABLE_MAX),
             }
         }
+    }
+
+    pub fn set_cursor_color(&mut self, color: ColorCode) {
+        self.color_code = color;
     }
 }
 

@@ -24,7 +24,10 @@ fn panic(_panic_info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    panic!();
+    vga::WRITER.lock().set_cursor_color(vga::ColorCode::new(
+        vga::Color::Green,
+        vga::Color::Black,
+    ));
     write!(vga::WRITER.lock(), "hello bombel").unwrap();
 
     loop {}
