@@ -1,6 +1,9 @@
 #![no_std]
 #![no_main]
 
+mod vga;
+
+use core::fmt::Write;
 use core::panic::PanicInfo;
 use bootloader_api::{entry_point, BootloaderConfig};
 
@@ -13,31 +16,16 @@ static BOOTLOADER_CONFIG: BootloaderConfig = {
 
 entry_point!(kernel_main, config = &BOOTLOADER_CONFIG);
 
-static PANIC_MESSAGE: &[u8] = b"tacOS kernel paniced! haning up...";
-
 #[panic_handler]
 fn panic(_panic_info: &PanicInfo) -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
-    for (i, &byte) in PANIC_MESSAGE.iter().enumerate() {
-        unsafe {
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
-        }
-    }
+    write!(vga::WRITER.lock(), "TacOS kernel panicked! hanging up...").unwrap();
 
     loop {}
 }
 
-static MESSAGE: &[u8] = b"Os Bombelka!!!!";
-
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
-    for (i, &byte) in MESSAGE.iter().enumerate() {
-        unsafe {
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
-        }
-    }
+    panic!();
+    write!(vga::WRITER.lock(), "hello bombel").unwrap();
 
     loop {}
 }
