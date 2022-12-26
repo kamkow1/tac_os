@@ -3,7 +3,6 @@
 
 mod vga;
 
-use core::fmt::Write;
 use core::panic::PanicInfo;
 use bootloader_api::{entry_point, BootloaderConfig};
 
@@ -17,18 +16,19 @@ static BOOTLOADER_CONFIG: BootloaderConfig = {
 entry_point!(kernel_main, config = &BOOTLOADER_CONFIG);
 
 #[panic_handler]
-fn panic(_panic_info: &PanicInfo) -> ! {
-    write!(vga::WRITER.lock(), "TacOS kernel panicked! hanging up...").unwrap();
+fn panic(panic_info: &PanicInfo) -> ! {
+    vga::WRITER.lock().set_cursor_color(vga::ColorCode::new(
+        vga::Color::White,
+        vga::Color::Black,
+    ));
+
+    println!("{}", panic_info);
 
     loop {}
 }
 
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    vga::WRITER.lock().set_cursor_color(vga::ColorCode::new(
-        vga::Color::Green,
-        vga::Color::Black,
-    ));
-    write!(vga::WRITER.lock(), "hello bombel").unwrap();
+    println!("hello world\n");
 
     loop {}
 }
