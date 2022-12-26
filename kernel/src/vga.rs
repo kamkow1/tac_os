@@ -13,21 +13,22 @@ const ASCII_PRINTABLE_MAX: u8 = 0x7e;
 #[allow(dead_code)]
 #[repr(u8)]
 pub enum Color {
-    Black,
-    Blue,
-    Green,
-    Cyan,
-    Red,
-    Magenta,
-    LightGray,
-    DarkGray,
-    LightBlue,
-    LightGreen,
-    LightCyan,
-    LightRed,
-    Pink,
-    Yellow,
-    White,
+    Black           = 0,
+    Blue            = 1,
+    Green           = 2,
+    Cyan            = 3,
+    Red             = 4,
+    Magenta         = 5,
+    Brown           = 6,
+    LightGray       = 7,
+    DarkGray        = 8,
+    LightBlue       = 9,
+    LightGreen      = 10,
+    LightCyan       = 11,
+    LightRed        = 12,
+    LightMagenta    = 13,
+    LightBrown      = 14,
+    White           = 15,
 }
 
 #[allow(dead_code)]
@@ -141,7 +142,7 @@ impl fmt::Write for Writer {
 lazy_static! {
     pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         column_cursor: 0,
-        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        color_code: ColorCode::new(Color::White, Color::Black),
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) }
     });
 }

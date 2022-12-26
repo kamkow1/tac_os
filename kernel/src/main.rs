@@ -18,7 +18,7 @@ entry_point!(kernel_main, config = &BOOTLOADER_CONFIG);
 #[panic_handler]
 fn panic(panic_info: &PanicInfo) -> ! {
     vga::WRITER.lock().set_cursor_color(vga::ColorCode::new(
-        vga::Color::White,
+        vga::Color::Red,
         vga::Color::Black,
     ));
 
@@ -28,7 +28,8 @@ fn panic(panic_info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    println!("hello world\n");
+    panic!();
+    //println!("hello world\n");
 
     loop {}
 }
