@@ -28,8 +28,7 @@ fn panic(panic_info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    panic!();
-    //println!("hello world\n");
+    println!("hello world\n");
 
     loop {}
 }
