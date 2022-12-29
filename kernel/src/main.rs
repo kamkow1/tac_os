@@ -2,6 +2,7 @@
 #![no_main]
 
 mod vga;
+mod gdt;
 
 use core::panic::PanicInfo;
 use bootloader_api::{entry_point, BootloaderConfig};
@@ -28,7 +29,11 @@ fn panic(panic_info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(_bootinfo: &'static mut bootloader_api::BootInfo) -> ! {
-    println!("hello world\n");
+    println!("hello world\n!!!");
+
+    gdt::enable();
+
+    println!("Global Descriptor Table is Enabled!!! ;)");
 
     loop {}
 }

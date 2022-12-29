@@ -1,8 +1,8 @@
-use volatile::Volatile;
 use core::fmt;
 use core::fmt::Write;
 use lazy_static::lazy_static;
 use spin::Mutex;
+use volatile::Volatile;
 
 const BUFFER_HEIGHT: usize = 25;
 const BUFFER_WIDTH: usize = 80;
@@ -13,22 +13,22 @@ const ASCII_PRINTABLE_MAX: u8 = 0x7e;
 #[allow(dead_code)]
 #[repr(u8)]
 pub enum Color {
-    Black           = 0,
-    Blue            = 1,
-    Green           = 2,
-    Cyan            = 3,
-    Red             = 4,
-    Magenta         = 5,
-    Brown           = 6,
-    LightGray       = 7,
-    DarkGray        = 8,
-    LightBlue       = 9,
-    LightGreen      = 10,
-    LightCyan       = 11,
-    LightRed        = 12,
-    LightMagenta    = 13,
-    LightBrown      = 14,
-    White           = 15,
+    Black = 0,
+    Blue = 1,
+    Green = 2,
+    Cyan = 3,
+    Red = 4,
+    Magenta = 5,
+    Brown = 6,
+    LightGray = 7,
+    DarkGray = 8,
+    LightBlue = 9,
+    LightGreen = 10,
+    LightCyan = 11,
+    LightRed = 12,
+    LightMagenta = 13,
+    LightBrown = 14,
+    White = 15,
 }
 
 #[allow(dead_code)]
@@ -113,7 +113,7 @@ impl Writer {
                 });
 
                 self.column_cursor += 1;
-            },
+            }
         }
     }
 
@@ -159,9 +159,8 @@ macro_rules! print {
 }
 
 pub fn _print(args: fmt::Arguments) {
-    WRITER.lock().set_cursor_color(ColorCode::new(
-        Color::White,
-        Color::Black,
-    ));
+    WRITER
+        .lock()
+        .set_cursor_color(ColorCode::new(Color::White, Color::Black));
     WRITER.lock().write_fmt(args).unwrap();
 }
